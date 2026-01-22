@@ -1,0 +1,84 @@
+name: Full Stack Integration
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+permissions:
+  contents: read
+
+jobs:
+  integration-test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+    
+    - name: Start Backend
+      working-directory: ./backend
+      run: |
+        mvn clean install -DskipTests
+        nohup mvn spring-boot:run &
+        echo $! > backend.pid
+        sleep 30
+    
+    - name: Test Backend API
+      run: |
+        curl -f http://localhost:8080/api/tasks || exit 1
+    
+    - name: Build Frontend
+      working-directory: ./frontend
+      run: |
+        npm ci
+        npm run build
+    
+    - name: Stop Backend
+      if: always()
+      run: |
+        if [ -f backend.pid ]; then
+          kill $(cat backend.pid) || true
+        fi
+  
+  docker-compose-test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Build with Docker Compose
+      run: docker-compose build
+    
+    - name: Start services with Docker Compose
+      run: docker-compose up -d
+    
+    - name: Wait for services
+      run: sleep 60
+    
+    - name: Test Backend API via Docker
+      run: |
+        curl -f http://localhost:8080/api/tasks || exit 1
+    
+    - name: Test Frontend via Docker
+      run: |
+        curl -f http://localhost:80 || exit 1
+    
+    - name: Stop services
+      if: always()
+      run: docker-compose down

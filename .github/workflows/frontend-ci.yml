@@ -1,0 +1,88 @@
+name: Frontend CI/CD
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'frontend/**'
+      - '.github/workflows/frontend-ci.yml'
+  pull_request:
+    branches: [ main, develop ]
+    paths:
+      - 'frontend/**'
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: write
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+        cache-dependency-path: frontend/package-lock.json
+    
+    - name: Install dependencies
+      working-directory: ./frontend
+      run: npm ci
+    
+    - name: Lint
+      working-directory: ./frontend
+      run: npm run lint || true
+    
+    - name: Build
+      working-directory: ./frontend
+      run: npm run build
+    
+    - name: Build Docker Image
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      run: |
+        docker build -t fullstack-frontend:latest ./frontend
+        docker tag fullstack-frontend:latest fullstack-frontend:${{ github.sha }}
+    
+    - name: Save Docker Image
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      run: |
+        docker save fullstack-frontend:latest > frontend-image.tar
+    
+    - name: Upload Docker Image Artifact
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      uses: actions/upload-artifact@v3
+      with:
+        name: frontend-image
+        path: frontend-image.tar
+        retention-days: 1
+
+  sonarqube:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.event_name == 'push'
+    permissions:
+      contents: read
+      pull-requests: read
+    
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    
+    - name: SonarCloud Scan
+      uses: SonarSource/sonarcloud-github-action@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      with:
+        args: >
+          -Dsonar.projectKey=alyasilpiah_full-stack-demo-frontend
+          -Dsonar.organization=alyasilpiah
+          -Dsonar.sources=frontend/src
+      continue-on-error: true
