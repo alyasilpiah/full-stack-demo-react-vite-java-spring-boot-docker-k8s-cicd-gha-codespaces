@@ -23,11 +23,16 @@ Thumbs.db
 
 # Logs
 *.log
+backend.log
+frontend.log
 
 # Temporary files
 *.tmp
 *.swp
 *~
+*.pid
+backend.pid
+frontend.pid
 
 # Docker
 *.tar
