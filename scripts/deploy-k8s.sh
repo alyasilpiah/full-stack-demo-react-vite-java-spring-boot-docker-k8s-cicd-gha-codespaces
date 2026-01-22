@@ -45,8 +45,15 @@ kubectl apply -f k8s/frontend-deployment.yaml
 
 echo ""
 echo "Waiting for pods to be ready..."
-kubectl wait --for=condition=ready pod -l app=backend --timeout=120s || true
-kubectl wait --for=condition=ready pod -l app=frontend --timeout=120s || true
+if ! kubectl wait --for=condition=ready pod -l app=backend --timeout=120s 2>/dev/null; then
+    echo "Warning: Backend pods may not be ready yet. Checking status..."
+    kubectl get pods -l app=backend
+fi
+
+if ! kubectl wait --for=condition=ready pod -l app=frontend --timeout=120s 2>/dev/null; then
+    echo "Warning: Frontend pods may not be ready yet. Checking status..."
+    kubectl get pods -l app=frontend
+fi
 
 echo ""
 echo "Deployment complete!"
