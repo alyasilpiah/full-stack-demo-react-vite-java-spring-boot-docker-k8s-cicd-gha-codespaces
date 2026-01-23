@@ -57,7 +57,7 @@ jobs:
     
     - name: Upload Docker Image Artifact
       if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: frontend-image
         path: frontend-image.tar
@@ -76,14 +76,24 @@ jobs:
       with:
         fetch-depth: 0
     
-    - name: SonarQube Scan
-      uses: SonarSource/sonarqube-scan-action@master
+    - name: SonarQube Scan (Docker CLI)
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL || 'http://localhost:9000' }}
-      with:
-        args: >
-          -Dsonar.projectKey=alyasilpiah_full-stack-demo-frontend
-          -Dsonar.sources=frontend/src
+      run: |
+        if [ -z "${SONAR_TOKEN}" ]; then
+          echo "SONAR_TOKEN not set, skipping SonarQube scan"
+          exit 0
+        fi
+        echo "Running SonarQube scanner via Docker..."
+        docker run --rm \
+          -e SONAR_HOST_URL=${SONAR_HOST_URL} \
+          -e SONAR_LOGIN=${SONAR_TOKEN} \
+          -v "${{ github.workspace }}:/usr/src" \
+          -w "/usr/src/frontend" \
+          sonarsource/sonar-scanner-cli:latest \
+          -Dsonar.projectKey=alyasilpiah_full-stack-demo-frontend \
+          -Dsonar.sources=src \
+          -Dsonar.host.url=${SONAR_HOST_URL} \
+          -Dsonar.login=${SONAR_TOKEN}
       continue-on-error: true
