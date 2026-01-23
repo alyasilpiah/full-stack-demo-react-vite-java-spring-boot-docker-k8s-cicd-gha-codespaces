@@ -9,9 +9,9 @@ A complete demonstration repository showcasing modern full-stack development wit
 - **Database**: H2 (in-memory for demo)
 - **Containerization**: Docker & Docker Compose
 - **Orchestration**: Kubernetes with Minikube
-- **CI/CD**: GitHub Actions
-- **Code Quality**: SonarQube/SonarCloud
-- **Development**: GitHub Codespaces ready
+- **CI/CD**: GitHub Actions with manual dispatch support
+- **Code Quality**: SonarQube (local and cloud)
+- **Development**: GitHub Codespaces ready with CORS support
 
 ## 📋 Table of Contents
 
@@ -24,10 +24,12 @@ A complete demonstration repository showcasing modern full-stack development wit
 - [Kubernetes Deployment](#kubernetes-deployment)
 - [GitHub Codespaces](#github-codespaces)
 - [CI/CD Pipeline](#cicd-pipeline)
+- [SonarQube Setup](#sonarqube-setup)
 - [API Documentation](#api-documentation)
 - [Project Structure](#project-structure)
 - [Testing](#testing)
 - [Contributing](#contributing)
+- [Additional Documentation](#additional-documentation)
 
 ## ✨ Features
 
@@ -36,7 +38,7 @@ A complete demonstration repository showcasing modern full-stack development wit
 - Spring Data JPA for database operations
 - H2 in-memory database
 - Input validation
-- CORS configuration
+- CORS configuration for GitHub Codespaces
 - Comprehensive unit tests
 - JaCoCo code coverage
 - Maven build system
@@ -44,6 +46,7 @@ A complete demonstration repository showcasing modern full-stack development wit
 ### Frontend (React + Vite)
 - Modern React with Hooks
 - Vite for fast development and builds
+- Vite proxy for CORS-free development
 - Axios for API communication
 - Responsive UI design
 - Task management interface
@@ -51,10 +54,10 @@ A complete demonstration repository showcasing modern full-stack development wit
 
 ### DevOps
 - Multi-stage Docker builds
-- Docker Compose for local development
+- Docker Compose for local development (includes SonarQube)
 - Kubernetes manifests for production
-- GitHub Actions CI/CD pipelines
-- SonarQube integration
+- GitHub Actions CI/CD pipelines with manual dispatch
+- SonarQube integration (local and cloud support)
 - Automated testing
 
 ## 🏗️ Architecture
@@ -292,29 +295,102 @@ Codespaces will automatically forward ports 8080 and 5173.
    - Builds Maven project
    - Runs unit tests
    - Generates code coverage
-   - Performs SonarQube analysis
+   - Performs SonarQube analysis (if token provided)
    - Builds Docker image
+   - **Manual dispatch enabled** - Run workflows manually from GitHub Actions tab
 
 2. **Frontend CI/CD** (`.github/workflows/frontend-ci.yml`)
    - Installs dependencies
    - Runs linting
    - Builds production bundle
-   - Performs SonarQube analysis
+   - Performs SonarQube analysis (if token provided)
    - Builds Docker image
+   - **Manual dispatch enabled** - Run workflows manually from GitHub Actions tab
 
 3. **Integration Tests** (`.github/workflows/integration-test.yml`)
    - Tests backend API
    - Builds with Docker Compose
    - Tests full stack integration
+   - **Manual dispatch enabled** - Run workflows manually from GitHub Actions tab
+
+### Manual Workflow Dispatch
+
+All workflows now support manual triggering:
+
+1. Go to **Actions** tab in your GitHub repository
+2. Select the workflow you want to run
+3. Click **Run workflow** button
+4. Choose the branch
+5. Click **Run workflow**
 
 ### Setting up SonarQube
 
-To enable SonarQube analysis:
+The workflows support both local SonarQube and SonarCloud:
 
-1. Create account on [SonarCloud](https://sonarcloud.io)
-2. Generate a token
-3. Add `SONAR_TOKEN` to GitHub repository secrets
-4. Update organization name in workflow files
+- If `SONAR_TOKEN` is not set, SonarQube analysis is gracefully skipped
+- No workflow failures if token is missing
+- Perfect for local development and testing
+
+For production setup, see [SonarQube Setup](#sonarqube-setup) section below.
+
+## 🔍 SonarQube Setup
+
+### Local SonarQube Instance
+
+1. **Start SonarQube**:
+```bash
+docker-compose up -d sonarqube
+```
+
+2. **Run Setup Script**:
+```bash
+./scripts/setup-sonarqube.sh
+```
+
+This will:
+- Configure SonarQube admin account
+- Create projects for backend and frontend
+- Generate authentication tokens
+- Display all necessary configuration
+
+3. **Access SonarQube**:
+- URL: http://localhost:9000
+- Username: `admin`
+- Password: `Admin@123`
+
+### GitHub Actions Integration (Optional)
+
+If you want to use SonarQube in CI/CD:
+
+1. Add GitHub Secrets (Settings > Secrets and variables > Actions):
+   - `SONAR_TOKEN`: Token from setup script
+   - `SONAR_HOST_URL`: http://your-sonarqube-server:9000
+
+2. Workflows will automatically use these secrets when available
+3. If not set, SonarQube analysis is skipped (no failures)
+
+### Local Code Analysis
+
+**Backend**:
+```bash
+cd backend
+mvn clean verify sonar:sonar \
+  -Dsonar.projectKey=alyasilpiah_full-stack-demo-backend \
+  -Dsonar.host.url=http://localhost:9000 \
+  -Dsonar.login=YOUR_TOKEN
+```
+
+**Frontend**:
+```bash
+cd frontend
+sonar-scanner \
+  -Dsonar.projectKey=alyasilpiah_full-stack-demo-frontend \
+  -Dsonar.sources=src \
+  -Dsonar.host.url=http://localhost:9000 \
+  -Dsonar.login=YOUR_TOKEN
+```
+
+For detailed instructions, see [docs/SONARQUBE.md](docs/SONARQUBE.md)
 
 ## 📚 API Documentation
 
@@ -448,6 +524,19 @@ This repository demonstrates:
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
+## 📚 Additional Documentation
+
+Comprehensive guides available in the `docs/` folder:
+
+- **[SONARQUBE.md](docs/SONARQUBE.md)** - Complete SonarQube setup and usage guide
+- **[ENVIRONMENT.md](docs/ENVIRONMENT.md)** - Environment variables and configuration
+- **[BACKEND.md](docs/BACKEND.md)** - Backend development guide
+- **[FRONTEND.md](docs/FRONTEND.md)** - Frontend development guide
+- **[DEPLOYMENT.md](docs/DEPLOYMENT.md)** - Deployment instructions
+- **[CODESPACES.md](docs/CODESPACES.md)** - GitHub Codespaces setup
+- **[QUICKSTART.md](docs/QUICKSTART.md)** - Quick start guide
+- **[SUMMARY.md](docs/SUMMARY.md)** - Project summary
+
 ## 📝 License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
@@ -474,3 +563,32 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - Implementing proper error handling
 - Adding API documentation (Swagger/OpenAPI)
 - Setting up HTTPS/TLS certificates
+- Configuring proper SonarQube quality gates
+
+## 🔧 Key Improvements in This Version
+
+### ✅ Workflow Enhancements
+- Added `workflow_dispatch` to all workflows for manual execution
+- SonarQube analysis gracefully skips if token not provided
+- Improved error handling and continue-on-error flags
+- Support for local SonarQube instances
+
+### ✅ CORS Configuration
+- Enhanced backend CORS for GitHub Codespaces support
+- Automatic support for `*.githubpreview.dev` and `*.app.github.dev`
+- Configurable via environment variables
+- Support for credentials and preflight requests
+
+### ✅ Development Experience
+- Vite proxy configured for seamless API calls
+- Host binding enabled for Codespaces
+- Proper port forwarding configuration
+- Environment-specific configurations
+
+### ✅ SonarQube Integration
+- Local SonarQube instance in docker-compose
+- Automated setup script with token generation
+- Flexible configuration for local and cloud instances
+- Comprehensive documentation
+
+For complete setup instructions, see [docs/SONARQUBE.md](docs/SONARQUBE.md) and [docs/ENVIRONMENT.md](docs/ENVIRONMENT.md).
