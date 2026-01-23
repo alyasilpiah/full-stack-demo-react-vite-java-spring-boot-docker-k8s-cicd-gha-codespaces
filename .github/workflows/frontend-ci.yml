@@ -10,6 +10,7 @@ on:
     branches: [ main, develop ]
     paths:
       - 'frontend/**'
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -75,14 +76,14 @@ jobs:
       with:
         fetch-depth: 0
     
-    - name: SonarCloud Scan
-      uses: SonarSource/sonarcloud-github-action@master
+    - name: SonarQube Scan
+      uses: SonarSource/sonarqube-scan-action@master
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL || 'http://localhost:9000' }}
       with:
         args: >
           -Dsonar.projectKey=alyasilpiah_full-stack-demo-frontend
-          -Dsonar.organization=alyasilpiah
           -Dsonar.sources=frontend/src
       continue-on-error: true
