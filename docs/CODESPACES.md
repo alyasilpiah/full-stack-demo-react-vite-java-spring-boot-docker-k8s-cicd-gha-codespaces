@@ -274,7 +274,7 @@ export SERVER_PORT=8080
 ### Frontend Variables
 ```bash
 # Create .env.local
-VITE_API_URL=http://localhost:8080/api
+VITE_API_URL=/api
 ```
 
 ## Codespace Settings

@@ -118,7 +118,7 @@ const completed = await taskService.getTasksByCompleted(true);
 ### Development
 Create `.env` file:
 ```
-VITE_API_URL=http://localhost:8080/api
+VITE_API_URL=/api
 ```
 
 ### Production
