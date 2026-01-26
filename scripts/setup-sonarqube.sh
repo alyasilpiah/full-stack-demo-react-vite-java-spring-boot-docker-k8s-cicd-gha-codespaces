@@ -8,7 +8,7 @@ set -e
 SONARQUBE_HOST="http://localhost:9000"
 SONARQUBE_USER="admin"
 SONARQUBE_PASS="admin"
-NEW_PASSWORD="Admin@123"
+NEW_PASSWORD="Admin@123456"
 
 echo "🚀 Setting up SonarQube..."
 

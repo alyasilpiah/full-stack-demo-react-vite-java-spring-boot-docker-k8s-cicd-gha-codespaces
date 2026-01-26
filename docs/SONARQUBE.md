@@ -24,7 +24,7 @@ Wait for SonarQube to fully start (about 1-2 minutes), then run:
 
 This script will:
 - Wait for SonarQube to be ready
-- Change the default admin password
+- Change the default admin password (to `Admin@123456`)
 - Create projects for backend and frontend
 - Generate authentication tokens
 - Display setup information
@@ -33,7 +33,7 @@ This script will:
 
 - **URL**: http://localhost:9000
 - **Username**: admin
-- **Password**: Admin@123 (changed from default 'admin')
+- **Password**: Admin@123456 (changed from default 'admin', set by `./scripts/setup-sonarqube.sh`)
 
 ## GitHub Actions Integration
 

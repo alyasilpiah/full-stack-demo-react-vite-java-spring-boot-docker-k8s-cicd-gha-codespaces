@@ -8,7 +8,7 @@ This document lists all environment variables used in the Full Stack Demo applic
 
 ```properties
 # CORS Configuration
-cors.allowed.origins=${CORS_ALLOWED_ORIGINS:http://localhost:5173,http://localhost:3000,https://*.githubpreview.dev,https://*.app.github.dev}
+cors.allowed.origins=${CORS_ALLOWED_ORIGINS:http://localhost:5173,http://localhost:3000,http://localhost:8090,http://localhost:80,https://*.githubpreview.dev,https://*.preview.app.github.dev,https://*.app.github.dev}
 ```
 
 ### Docker Environment Variables
@@ -16,6 +16,7 @@ cors.allowed.origins=${CORS_ALLOWED_ORIGINS:http://localhost:5173,http://localho
 ```bash
 # In docker-compose.yml or .env file
 SPRING_PROFILES_ACTIVE=prod
+CORS_ALLOWED_ORIGINS=http://localhost:5173,http://localhost:3000,http://localhost:8090,http://localhost:80,https://*.githubpreview.dev,https://*.preview.app.github.dev,https://*.app.github.dev
 ```
 
 ## Frontend Configuration
@@ -100,6 +101,7 @@ GitHub Codespaces automatically forwards:
 
 The backend is pre-configured to accept requests from:
 - `*.githubpreview.dev`
+- `*.preview.app.github.dev`
 - `*.app.github.dev`
 
 No additional configuration needed.
