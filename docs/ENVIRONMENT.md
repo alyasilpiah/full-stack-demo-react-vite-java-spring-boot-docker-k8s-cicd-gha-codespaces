@@ -8,7 +8,7 @@ This document lists all environment variables used in the Full Stack Demo applic
 
 ```properties
 # CORS Configuration
-cors.allowed.origins=http://localhost:5173,http://localhost:3000,https://*.githubpreview.dev,https://*.app.github.dev
+cors.allowed.origins=${CORS_ALLOWED_ORIGINS:http://localhost:5173,http://localhost:3000,https://*.githubpreview.dev,https://*.app.github.dev}
 ```
 
 ### Docker Environment Variables
