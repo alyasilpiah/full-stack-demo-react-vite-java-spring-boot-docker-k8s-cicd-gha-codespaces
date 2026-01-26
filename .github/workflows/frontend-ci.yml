@@ -79,10 +79,10 @@ jobs:
     - name: SonarQube Scan (Docker CLI)
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL || 'http://localhost:9000' }}
+        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
       run: |
-        if [ -z "${SONAR_TOKEN}" ]; then
-          echo "SONAR_TOKEN not set, skipping SonarQube scan"
+        if [ -z "${SONAR_TOKEN}" ] || [ -z "${SONAR_HOST_URL}" ]; then
+          echo "SONAR_TOKEN or SONAR_HOST_URL not set, skipping SonarQube scan"
           exit 0
         fi
         echo "Running SonarQube scanner via Docker..."

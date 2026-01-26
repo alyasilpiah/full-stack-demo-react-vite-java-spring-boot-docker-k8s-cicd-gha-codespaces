@@ -8,7 +8,7 @@ This document lists all environment variables used in the Full Stack Demo applic
 
 ```properties
 # CORS Configuration
-cors.allowed.origins=*,https://*.githubpreview.dev,https://*.app.github.dev
+cors.allowed.origins=http://localhost:5173,http://localhost:3000,https://*.githubpreview.dev,https://*.app.github.dev
 ```
 
 ### Docker Environment Variables
@@ -25,7 +25,7 @@ SPRING_PROFILES_ACTIVE=prod
 Create `frontend/.env.development`:
 
 ```env
-VITE_API_URL=http://localhost:8080/api
+VITE_API_URL=/api
 ```
 
 ### Production (.env.production)
