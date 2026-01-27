@@ -30,7 +30,7 @@ This document summarizes all changes made to fix workflows, add SonarQube local 
 #### Integration Tests (`.github/workflows/integration-test.yml`)
 - ✅ Added `workflow_dispatch` trigger for manual execution
 - ✅ Modified to only build backend and frontend (exclude SonarQube)
-- ✅ Fixed frontend port from 80 to 8090
+- ✅ Fixed frontend port from 80 to 8000
 
 ### 3. CORS Configuration
 
@@ -101,7 +101,7 @@ This document summarizes all changes made to fix workflows, add SonarQube local 
 
 ### 1. Start SonarQube Locally
 ```bash
-docker-compose up -d sonarqube
+docker compose up -d sonarqube
 ./scripts/setup-sonarqube.sh
 ```
 
@@ -128,10 +128,10 @@ CORS is automatically configured for Codespaces URLs.
 ### 4. Local Development
 ```bash
 # Start all services
-docker-compose up -d
+docker compose up -d
 
 # Or start without SonarQube
-docker-compose up -d backend frontend
+docker compose up -d backend-service frontend
 ```
 
 ## Benefits
@@ -180,7 +180,7 @@ git push
 
 ### 3. Test Local SonarQube
 ```bash
-docker-compose up -d sonarqube
+docker compose up -d sonarqube
 ./scripts/setup-sonarqube.sh
 # Follow displayed instructions for code analysis
 ```
@@ -213,7 +213,7 @@ npm run dev
 
 ### SonarQube Issues
 - Ensure Docker has enough memory (2GB+)
-- Check SonarQube logs: `docker-compose logs sonarqube`
+- Check SonarQube logs: `docker compose logs sonarqube`
 - Wait for full initialization (1-2 minutes)
 
 ## Next Steps

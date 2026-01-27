@@ -47,7 +47,7 @@ The Codespace comes pre-configured with:
 Ports are automatically forwarded:
 - **5173**: Vite Development Server (Frontend)
 - **8080**: Spring Boot Backend API
-- **3000**: Alternative Frontend Port
+- **8000**: Frontend Docker (Nginx)
 
 ## First Time Setup
 
@@ -143,7 +143,7 @@ docker build -t backend ./backend
 docker build -t frontend ./frontend
 
 # Run with Docker Compose
-docker-compose up --build
+docker compose up --build
 ```
 
 ### Kubernetes in Codespace

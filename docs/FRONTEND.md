@@ -138,7 +138,7 @@ npm install
 ```bash
 npm run dev
 ```
-Application runs on `http://localhost:5173`
+Application runs on `http://localhost:5173` (local development). Docker containers use port `8000`.
 
 ### Build for Production
 ```bash
@@ -177,13 +177,13 @@ The application uses custom CSS with:
 ### Development Build
 ```bash
 docker build -t fullstack-frontend:dev .
-docker run -p 3000:80 fullstack-frontend:dev
+docker run -p 8000:8000 fullstack-frontend:dev
 ```
 
 ### Production Build
 ```bash
 docker build -t fullstack-frontend:latest .
-docker run -p 80:80 fullstack-frontend:latest
+docker run -p 8000:8000 fullstack-frontend:latest
 ```
 
 The Docker image:
@@ -205,7 +205,7 @@ location / {
 }
 
 location /api {
-    proxy_pass http://backend:8080;
+    proxy_pass http://backend-service:8080; # Docker Compose service name
 }
 ```
 
@@ -286,7 +286,7 @@ rm -rf node_modules/.vite
 # Change port in vite.config.js
 export default defineConfig({
   server: {
-    port: 3000
+    port: 5173
   }
 })
 ```

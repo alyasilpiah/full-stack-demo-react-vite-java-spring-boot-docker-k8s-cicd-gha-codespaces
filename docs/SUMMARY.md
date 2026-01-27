@@ -141,8 +141,8 @@ This repository teaches:
 
 #### 1. Docker Compose (Easiest)
 ```bash
-docker-compose up --build
-# Access at http://localhost
+docker compose up --build
+# Access at http://localhost:8000
 ```
 
 #### 2. Helper Scripts

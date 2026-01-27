@@ -12,16 +12,16 @@ git clone https://github.com/alyasilpiah/full-stack-demo-react-vite-java-spring-
 cd full-stack-demo-react-vite-java-spring-boot-docker-k8s-cicd-gha-codespaces
 
 # Start with Docker Compose
-docker-compose up --build
+docker compose up --build
 
 # Access the application
-# Frontend: http://localhost
+# Frontend: http://localhost:8000
 # Backend API: http://localhost:8080/api/tasks
 ```
 
 To stop:
 ```bash
-docker-compose down
+docker compose down
 ```
 
 ## Option 2: Helper Scripts (Recommended for Development)
@@ -95,7 +95,7 @@ Ports will be automatically forwarded. Click the **Ports** tab to access the app
 
 Once running, you can access:
 
-- **Frontend**: http://localhost:5173 (or http://localhost if using Docker Compose)
+- **Frontend**: http://localhost:5173 (or http://localhost:8000 if using Docker Compose)
 - **Backend API**: http://localhost:8080/api/tasks
 - **H2 Console**: http://localhost:8080/h2-console
   - JDBC URL: `jdbc:h2:mem:testdb`
@@ -222,7 +222,7 @@ npm install
 docker system prune -a
 
 # Rebuild without cache
-docker-compose build --no-cache
+docker compose build --no-cache
 ```
 
 ## Running Tests

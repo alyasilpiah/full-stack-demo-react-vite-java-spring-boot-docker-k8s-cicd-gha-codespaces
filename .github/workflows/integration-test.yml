@@ -64,10 +64,10 @@ jobs:
     - uses: actions/checkout@v4
     
     - name: Build with Docker Compose
-      run: docker compose build backend frontend
+      run: docker compose build backend-service frontend
     
     - name: Start services with Docker Compose
-      run: docker compose up -d backend frontend
+      run: docker compose up -d backend-service frontend
     
     - name: Wait for services
       run: sleep 60
@@ -78,7 +78,7 @@ jobs:
     
     - name: Test Frontend via Docker
       run: |
-        curl -f http://localhost:8090 || exit 1
+        curl -f http://localhost:8000 || exit 1
     
     - name: Stop services
       if: always()
