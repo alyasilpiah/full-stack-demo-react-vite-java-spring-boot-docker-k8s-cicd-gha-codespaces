@@ -131,6 +131,188 @@ backend-service     ClusterIP  10.96.123.45    <none>        8080/TCP
 frontend-service    NodePort   10.96.234.56    <none>        8000:30080/TCP
 ```
 
+## Step 5A: Access Minikube Dashboard (Kubernetes UI)
+
+The Minikube dashboard provides a web-based UI to monitor and manage your Kubernetes cluster. This is especially useful for visualizing pods, services, deployments, and logs.
+
+### Enable the Dashboard Addon
+
+First, enable the dashboard addon if it's not already enabled:
+
+```bash
+minikube addons enable dashboard
+```
+
+### Start the Dashboard
+
+Start the Kubernetes dashboard with the following command:
+
+```bash
+minikube dashboard --url
+```
+
+This command will:
+- Start the dashboard service
+- Output a URL like: `http://127.0.0.1:XXXXX/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/`
+
+> **Note**: The dashboard runs on a random port (e.g., `42523`, `35789`). Keep the terminal running - don't close it!
+
+### Access Dashboard in GitHub Codespaces
+
+Since the dashboard runs on `localhost` inside your Codespace, you need to forward the port to access it from your browser.
+
+#### Method 1: Automatic Port Forwarding (Recommended)
+
+1. When you run `minikube dashboard --url`, note the port number from the URL (e.g., if URL is `http://127.0.0.1:42523/...`, the port is `42523`)
+2. GitHub Codespaces will automatically detect the port
+3. Go to the **Ports** tab in VS Code (bottom panel)
+4. Find the port number used by the dashboard
+5. Click the **globe icon** 🌐 or copy the **Forwarded Address** to open it in your browser
+
+#### Method 2: Manual Port Forwarding
+
+If automatic detection doesn't work:
+
+1. In the **Ports** tab, click **Add Port**
+2. Enter the port number shown in the dashboard URL
+3. Set visibility to **Private** (default)
+4. Click the globe icon to open in browser
+
+#### Method 3: Using kubectl Port Forward
+
+Alternatively, you can use `kubectl` to create a more predictable port forward:
+
+```bash
+# Forward dashboard to port 8001 (or any free port)
+kubectl port-forward -n kubernetes-dashboard service/kubernetes-dashboard 8001:80
+```
+
+Then access via the Codespace forwarded URL for port `8001`.
+
+### Accessing the Dashboard URL
+
+Once port forwarding is set up, you'll access the dashboard using your Codespace's URL:
+
+**Example URL format:**
+```
+https://vigilant-space-barnacle-xxxxx-42523.app.github.dev/api/v1/namespaces/kubernetes-dashboard/services/http:kubernetes-dashboard:/proxy/
+```
+
+Replace `xxxxx-42523` with your actual Codespace identifier and port number.
+
+### What You'll See in the Dashboard
+
+The Kubernetes dashboard provides several views:
+
+#### 1. **Cluster Overview**
+   - Total resources (nodes, namespaces, deployments, pods)
+   - Resource usage graphs (CPU, memory)
+
+#### 2. **Namespace View** (Select "fullstack" namespace)
+   - Workloads:
+     - **Deployments**: `backend-deployment`, `frontend-deployment`
+     - **Pods**: Running instances with status (Running, Pending, Error)
+     - **Replica Sets**: Ensures desired number of pods
+   
+#### 3. **Service Details**
+   - **Services** tab shows:
+     - `backend-service` (ClusterIP) - Internal communication
+     - `frontend-service` (NodePort) - External access via port 30080
+   - Click any service to see:
+     - Cluster IP address
+     - Ports and target ports
+     - Endpoints (pod IPs)
+     - Labels and selectors
+
+#### 4. **Pod Details**
+   - Click any pod to see:
+     - Container status and restart count
+     - Logs (view container logs directly)
+     - Events (deployment history, errors)
+     - Resource usage (CPU, memory)
+     - Environment variables and volumes
+
+#### 5. **Config and Storage**
+   - **ConfigMaps**: View `app-config` with environment variables
+   - **Secrets**: Kubernetes secrets (if any)
+   - **Persistent Volumes**: Storage resources
+
+### Useful Dashboard Features
+
+#### View Pod Logs
+1. Navigate to **Workloads** → **Pods**
+2. Select namespace: `fullstack`
+3. Click on a pod name (e.g., `backend-deployment-abc123...`)
+4. Click **Logs** button (top-right)
+5. View real-time logs from your application
+
+#### Restart a Deployment
+1. Go to **Workloads** → **Deployments**
+2. Select `backend-deployment` or `frontend-deployment`
+3. Click menu (⋮) → **Restart**
+
+#### Check Resource Usage
+1. Go to **Cluster** → **Nodes**
+2. See CPU and memory usage for the Minikube node
+3. Drill down to see per-pod resource consumption
+
+### Troubleshooting Dashboard Access
+
+#### Dashboard won't start
+```bash
+# Check if dashboard addon is enabled
+minikube addons list | grep dashboard
+
+# Enable if needed
+minikube addons enable dashboard
+
+# Check dashboard pods
+kubectl get pods -n kubernetes-dashboard
+```
+
+#### Port forwarding not working
+```bash
+# List all forwarded ports
+kubectl port-forward -h
+
+# Kill any existing port-forward processes
+pkill -f "port-forward"
+
+# Try with a different port
+minikube dashboard --url
+# Then forward the new port in Codespaces
+```
+
+#### Can't access via Codespace URL
+1. Verify the port is forwarded in the **Ports** tab
+2. Check port visibility is set correctly (Private/Public)
+3. Ensure you're using the correct Codespace URL with the right port
+4. Try refreshing the browser or opening in incognito mode
+
+#### Dashboard shows "Forbidden" error
+```bash
+# Check dashboard service account permissions
+kubectl get serviceaccount -n kubernetes-dashboard
+kubectl get clusterrolebinding -n kubernetes-dashboard
+
+# Restart dashboard
+minikube dashboard --url
+```
+
+### Keep Dashboard Running
+
+> **Important**: The `minikube dashboard --url` command must remain running in your terminal. If you close that terminal, the dashboard will stop.
+
+**Best practice**: Run the dashboard in a separate terminal tab so you can continue working in other terminals.
+
+```bash
+# Terminal 1: Dashboard (keep running)
+minikube dashboard --url
+
+# Terminal 2: Your regular kubectl commands
+kubectl get pods -n fullstack
+```
+
 ## Step 6: Access the Frontend Outside Codespaces
 
 The frontend service uses NodePort **30080**.
@@ -157,7 +339,7 @@ http://<MINIKUBE_IP>:30080
 
 Create a task in the UI and verify it shows in the list.
 
-## Step 6B: Accessing Frontend via Kubernetes (In Codespaces)
+## Step 7A: Accessing Frontend via Kubernetes (In Codespaces)
 
 Once deployed to Minikube, you can access the frontend directly in Codespaces using port forwarding:
 
@@ -197,7 +379,7 @@ If you see **403 Forbidden** errors, ensure the CORS configuration is correct:
 
 ---
 
-## Step 7: Clean Up (Optional)
+## Step 8: Clean Up (Optional)
 
 ### Delete all Kubernetes resources
 
