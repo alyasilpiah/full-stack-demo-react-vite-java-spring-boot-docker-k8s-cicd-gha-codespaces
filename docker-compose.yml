@@ -1,7 +1,5 @@
-version: '3.8'
-
 services:
-  backend:
+  backend-service:
     build:
       context: ./backend
       dockerfile: Dockerfile
@@ -26,9 +24,9 @@ services:
       dockerfile: Dockerfile
     container_name: fullstack-frontend
     ports:
-      - "8090:80"
+      - "8000:8000"
     depends_on:
-      - backend
+      - backend-service
     networks:
       - fullstack-network
 
