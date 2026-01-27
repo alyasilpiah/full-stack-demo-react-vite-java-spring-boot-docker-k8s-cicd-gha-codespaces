@@ -8,7 +8,7 @@ This document lists all environment variables used in the Full Stack Demo applic
 
 ```properties
 # CORS Configuration
-cors.allowed.origins=${CORS_ALLOWED_ORIGINS:http://localhost:5173,http://localhost:3000,http://localhost:8090,http://localhost:80,https://*.githubpreview.dev,https://*.preview.app.github.dev,https://*.app.github.dev}
+cors.allowed.origins=${CORS_ALLOWED_ORIGINS:http://localhost:5173,http://localhost:8000,https://*.githubpreview.dev,https://*.preview.app.github.dev,https://*.app.github.dev}
 ```
 
 ### Docker Environment Variables
@@ -16,7 +16,7 @@ cors.allowed.origins=${CORS_ALLOWED_ORIGINS:http://localhost:5173,http://localho
 ```bash
 # In docker-compose.yml or .env file
 SPRING_PROFILES_ACTIVE=prod
-CORS_ALLOWED_ORIGINS=http://localhost:5173,http://localhost:3000,http://localhost:8090,http://localhost:80,https://*.githubpreview.dev,https://*.preview.app.github.dev,https://*.app.github.dev
+CORS_ALLOWED_ORIGINS=http://localhost:5173,http://localhost:8000,https://*.githubpreview.dev,https://*.preview.app.github.dev,https://*.app.github.dev
 ```
 
 ## Frontend Configuration
@@ -122,23 +122,8 @@ mvn spring-boot:run
 
 ```yaml
 backend:    8080 -> 8080
-frontend:   80 -> 8090
+frontend:   8000 -> 8000
 sonarqube:  9000 -> 9000
-```
-
-### Override Configuration
-
-Create `docker-compose.override.yml`:
-
-```yaml
-version: '3.8'
-
-services:
-  backend:
-    environment:
-      - CORS_ALLOWED_ORIGINS=http://localhost:3000,http://localhost:5173
-    ports:
-      - "8081:8080"
 ```
 
 ## Kubernetes Deployment

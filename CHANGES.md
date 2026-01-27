@@ -30,7 +30,7 @@ This document summarizes all changes made to fix workflows, add SonarQube local 
 #### Integration Tests (`.github/workflows/integration-test.yml`)
 - ✅ Added `workflow_dispatch` trigger for manual execution
 - ✅ Modified to only build backend and frontend (exclude SonarQube)
-- ✅ Fixed frontend port from 80 to 8090
+- ✅ Fixed frontend port from 80 to 8000
 
 ### 3. CORS Configuration
 

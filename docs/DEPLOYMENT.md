@@ -41,27 +41,27 @@ Frontend runs on `http://localhost:5173`
 
 #### Step 1: Build and Start
 ```bash
-docker-compose up --build -d
+docker compose up --build -d
 ```
 
 #### Step 2: Verify Services
 ```bash
-docker-compose ps
-docker-compose logs -f
+docker compose ps
+docker compose logs -f
 ```
 
 #### Step 3: Access Application
-- Frontend: http://localhost
+- Frontend: http://localhost:8000
 - Backend API: http://localhost:8080
 
 #### Stop Services
 ```bash
-docker-compose down
+docker compose down
 ```
 
 #### Cleanup
 ```bash
-docker-compose down -v
+docker compose down -v
 docker system prune -a
 ```
 
@@ -94,7 +94,7 @@ docker run -d \
 docker run -d \
   --name frontend \
   --network fullstack-network \
-  -p 80:80 \
+  -p 8000:8000 \
   fullstack-frontend:latest
 ```
 
@@ -368,7 +368,7 @@ helm repo update
 helm install prometheus prometheus-community/kube-prometheus-stack
 
 # Access Grafana
-kubectl port-forward svc/prometheus-grafana 3000:80
+kubectl port-forward svc/prometheus-grafana 8000:80
 ```
 
 ### ELK Stack

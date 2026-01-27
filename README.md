@@ -30,6 +30,7 @@ A complete demonstration repository showcasing modern full-stack development wit
 - [Testing](#testing)
 - [Contributing](#contributing)
 - [Additional Documentation](#additional-documentation)
+- [Student Tutorial](#student-tutorial)
 
 ## ✨ Features
 
@@ -66,7 +67,7 @@ A complete demonstration repository showcasing modern full-stack development wit
 ┌─────────────────┐      ┌─────────────────┐
 │  React Frontend │─────▶│  Spring Boot    │
 │  (Vite + Nginx) │      │  Backend API    │
-│  Port: 80       │◀─────│  Port: 8080     │
+│  Port: 8000     │◀─────│  Port: 8080     │
 └─────────────────┘      └─────────────────┘
                                   │
                                   ▼
@@ -105,10 +106,10 @@ git clone https://github.com/alyasilpiah/full-stack-demo-react-vite-java-spring-
 cd full-stack-demo-react-vite-java-spring-boot-docker-k8s-cicd-gha-codespaces
 
 # Build and start services
-docker-compose up --build
+docker compose up --build
 
 # Access the application
-# Frontend: http://localhost:8090
+# Frontend: http://localhost:8000
 # Backend API: http://localhost:8080/api/tasks
 # Health: http://localhost:8080/api/health/status
 ```
@@ -188,16 +189,16 @@ docker build -t fullstack-frontend:latest ./frontend
 
 ```bash
 # Start all services
-docker-compose up -d
+docker compose up -d
 
 # View logs
-docker-compose logs -f
+docker compose logs -f
 
 # Stop services
-docker-compose down
+docker compose down
 
 # Rebuild and start
-docker-compose up --build
+docker compose up --build
 ```
 
 ## ☸️ Kubernetes Deployment
@@ -340,7 +341,7 @@ For production setup, see [SonarQube Setup](#sonarqube-setup) section below.
 
 1. **Start SonarQube**:
 ```bash
-docker-compose up -d sonarqube
+docker compose up -d sonarqube
 ```
 
 2. **Run Setup Script**:
@@ -539,6 +540,16 @@ Comprehensive guides available in the `docs/` folder:
 - **[QUICKSTART.md](docs/QUICKSTART.md)** - Quick start guide
 - **[SUMMARY.md](docs/SUMMARY.md)** - Project summary
 
+## 🎓 Student Tutorial
+
+New to the repo? Follow the guided walkthrough in **[docs/STUDENTS_TUTORIAL.md](docs/STUDENTS_TUTORIAL.md)** for:
+
+- Forking the repository
+- Creating a Codespace
+- Running Docker Compose
+- Deploying with Minikube
+- Accessing the frontend from outside Codespaces
+
 ## 📝 License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
@@ -588,7 +599,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - Environment-specific configurations
 
 ### ✅ SonarQube Integration
-- Local SonarQube instance in docker-compose
+- Local SonarQube instance in docker compose
 - Automated setup script with token generation
 - Flexible configuration for local and cloud instances
 - Comprehensive documentation

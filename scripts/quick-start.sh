@@ -105,8 +105,8 @@ fi
 echo ""
 
 # Wait for frontend
-if wait_for_service "http://localhost:8090" "Frontend"; then
-    echo "   Frontend UI: http://localhost:8090"
+if wait_for_service "http://localhost:8000" "Frontend"; then
+    echo "   Frontend UI: http://localhost:8000"
 fi
 
 echo ""
@@ -138,7 +138,7 @@ echo "✅ Services are running!"
 echo "════════════════════════════════════════════════════════════════"
 echo ""
 echo "📱 Access Points:"
-echo "   • Frontend:  http://localhost:8090"
+echo "   • Frontend:  http://localhost:8000"
 echo "   • Backend:   http://localhost:8080/api/tasks"
 echo "   • Health:    http://localhost:8080/api/health/status"
 echo "   • H2 Console: http://localhost:8080/h2-console"
