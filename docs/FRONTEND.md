@@ -138,7 +138,7 @@ npm install
 ```bash
 npm run dev
 ```
-Application runs on `http://localhost:5173`
+Application runs on `http://localhost:5173` (local development). Docker containers use port `8000`.
 
 ### Build for Production
 ```bash
@@ -205,7 +205,7 @@ location / {
 }
 
 location /api {
-    proxy_pass http://backend-service:8080;
+    proxy_pass http://backend-service:8080; # Docker Compose service name
 }
 ```
 
