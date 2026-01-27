@@ -5,7 +5,7 @@ This tutorial is designed for students. It explains how to fork the repository, 
 ## Step 1: Create a Fork of the Repository
 
 **Repository to fork:**  
-`alyasilpiah/full-stack-demo-react-vite-java-spring-boot-docker-k8s-cicd-gha-codespaces`
+`<your-org-or-user>/full-stack-demo-react-vite-java-spring-boot-docker-k8s-cicd-gha-codespaces`
 
 ### What is a fork?
 A fork is your own copy of a GitHub repository. It lets you experiment or make changes without affecting the original project. This is useful for assignments, labs, and learning.
