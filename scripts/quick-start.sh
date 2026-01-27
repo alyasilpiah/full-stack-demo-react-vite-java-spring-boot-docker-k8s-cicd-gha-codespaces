@@ -47,27 +47,18 @@ RUN_SETUP=false
 
 while [[ $# -gt 0 ]]; do
     case $1 in
-        --with-sonarqube)
-            START_SONARQUBE=true
-            shift
-            ;;
-        --setup-sonarqube)
-            START_SONARQUBE=true
-            RUN_SETUP=true
-            shift
-            ;;
         --help)
             echo "Usage: $0 [OPTIONS]"
             echo ""
             echo "Options:"
-            echo "  --with-sonarqube     Start SonarQube along with app services"
-            echo "  --setup-sonarqube    Start SonarQube and run setup script"
+            echo "  --with-sonarqube     Not supported (SonarQube not in docker-compose.yml)"
+            echo "  --setup-sonarqube    Not supported (SonarQube not in docker-compose.yml)"
             echo "  --help               Show this help message"
             echo ""
             echo "Examples:"
             echo "  $0                          # Start backend and frontend only"
-            echo "  $0 --with-sonarqube        # Start all services including SonarQube"
-            echo "  $0 --setup-sonarqube       # Start all services and configure SonarQube"
+            echo "  $0 --with-sonarqube        # Not supported (SonarQube not in docker-compose.yml)"
+            echo "  $0 --setup-sonarqube       # Not supported (SonarQube not in docker-compose.yml)"
             exit 0
             ;;
         *)
@@ -80,13 +71,12 @@ done
 
 # Determine which services to start
 if [ "$START_SONARQUBE" = true ]; then
-    SERVICES="backend-service frontend sonarqube"
-    echo "📦 Starting all services (backend-service, frontend, sonarqube)..."
-else
-    SERVICES="backend-service frontend"
-    echo "📦 Starting application services (backend-service, frontend)..."
-    echo "   Use --with-sonarqube to include SonarQube"
+    echo "⚠️  SonarQube is not defined in docker-compose.yml. Use docker compose up -d once you add it."
+    START_SONARQUBE=false
 fi
+
+SERVICES="backend-service frontend"
+echo "📦 Starting application services (backend-service, frontend)..."
 
 echo ""
 
