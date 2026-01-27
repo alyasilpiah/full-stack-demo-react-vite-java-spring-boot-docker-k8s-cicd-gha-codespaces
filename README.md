@@ -108,8 +108,9 @@ cd full-stack-demo-react-vite-java-spring-boot-docker-k8s-cicd-gha-codespaces
 docker-compose up --build
 
 # Access the application
-# Frontend: http://localhost:80
+# Frontend: http://localhost:8090
 # Backend API: http://localhost:8080/api/tasks
+# Health: http://localhost:8080/api/health/status
 ```
 
 ### Option 2: Manual Setup
@@ -356,7 +357,7 @@ This will:
 3. **Access SonarQube**:
 - URL: http://localhost:9000
 - Username: `admin`
-- Password: `Admin@123`
+- Password: `Admin@123456` (set by `./scripts/setup-sonarqube.sh`)
 
 ### GitHub Actions Integration (Optional)
 
@@ -398,12 +399,13 @@ For detailed instructions, see [docs/SONARQUBE.md](docs/SONARQUBE.md)
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | `/api/tasks` | Get all tasks |
+| GET | `/api/tasks` | Get all tasks (seeded by default) |
 | GET | `/api/tasks?completed=true` | Get completed tasks |
 | GET | `/api/tasks/{id}` | Get task by ID |
 | POST | `/api/tasks` | Create new task |
 | PUT | `/api/tasks/{id}` | Update task |
 | DELETE | `/api/tasks/{id}` | Delete task |
+| GET | `/api/health/status` | Health status |
 
 ### Request/Response Examples
 

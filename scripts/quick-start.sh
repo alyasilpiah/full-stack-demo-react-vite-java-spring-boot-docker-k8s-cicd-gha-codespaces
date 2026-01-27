@@ -97,8 +97,9 @@ docker-compose up -d $SERVICES
 echo ""
 
 # Wait for backend
-if wait_for_service "http://localhost:8080/api/tasks" "Backend API"; then
+if wait_for_service "http://localhost:8080/api/health/status" "Backend API"; then
     echo "   Backend API: http://localhost:8080/api/tasks"
+    echo "   Backend Health: http://localhost:8080/api/health/status"
 fi
 
 echo ""
@@ -139,6 +140,7 @@ echo ""
 echo "📱 Access Points:"
 echo "   • Frontend:  http://localhost:8090"
 echo "   • Backend:   http://localhost:8080/api/tasks"
+echo "   • Health:    http://localhost:8080/api/health/status"
 echo "   • H2 Console: http://localhost:8080/h2-console"
 
 if [ "$START_SONARQUBE" = true ]; then
