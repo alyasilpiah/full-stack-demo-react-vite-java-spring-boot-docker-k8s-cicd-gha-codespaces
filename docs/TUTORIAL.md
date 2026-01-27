@@ -22,7 +22,7 @@ Your fork does not have access to the original repository secrets. Add your own:
 1. In your fork, go to **Settings** → **Secrets and variables** → **Actions**.
 2. Click **New repository secret**.
 3. Add:
-   - `SONAR_TOKEN`: your token from SonarQube
+   - `SONAR_TOKEN`: your token from SonarQube (required for analysis)
    - `SONAR_HOST_URL`: your SonarQube server URL (example: `http://localhost:9000`)
 
 If you skip this, the SonarQube steps will be skipped in workflows.

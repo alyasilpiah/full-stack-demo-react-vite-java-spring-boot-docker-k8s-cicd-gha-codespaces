@@ -8,10 +8,10 @@ This guide explains how to set up and use SonarQube locally for code quality ana
 
 ```bash
 # Start all services including SonarQube
-docker-compose up -d sonarqube
+docker compose up -d sonarqube
 
 # Or start all services
-docker-compose up -d
+docker compose up -d
 ```
 
 ### 2. Run Setup Script
@@ -132,19 +132,19 @@ services:
 
 ```bash
 # Start all services
-docker-compose up -d
+docker compose up -d
 
 # Start specific service
-docker-compose up -d sonarqube
+docker compose up -d sonarqube
 
 # View logs
-docker-compose logs -f sonarqube
+docker compose logs -f sonarqube
 
 # Stop services
-docker-compose down
+docker compose down
 
 # Stop and remove volumes
-docker-compose down -v
+docker compose down -v
 ```
 
 ## Troubleshooting
@@ -153,14 +153,14 @@ docker-compose down -v
 
 ```bash
 # Check logs
-docker-compose logs sonarqube
+docker compose logs sonarqube
 
 # Increase Docker memory (SonarQube needs ~2GB)
 # In Docker Desktop: Settings > Resources > Memory
 
 # Reset SonarQube
-docker-compose down -v
-docker-compose up -d sonarqube
+docker compose down -v
+docker compose up -d sonarqube
 ```
 
 ### Token Issues

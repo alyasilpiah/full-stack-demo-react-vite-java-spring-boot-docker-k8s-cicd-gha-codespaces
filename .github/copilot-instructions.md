@@ -168,8 +168,8 @@ docker build -t fullstack-backend:latest ./backend
 docker build -t fullstack-frontend:latest ./frontend
 
 # Using Docker Compose (includes SonarQube)
-docker-compose up --build    # Build and start all services
-docker-compose down          # Stop services
+docker compose up --build    # Build and start all services
+docker compose down          # Stop services
 ```
 
 ### Kubernetes

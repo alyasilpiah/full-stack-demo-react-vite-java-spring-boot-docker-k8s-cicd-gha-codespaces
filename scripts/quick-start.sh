@@ -80,11 +80,11 @@ done
 
 # Determine which services to start
 if [ "$START_SONARQUBE" = true ]; then
-    SERVICES="backend frontend sonarqube"
-    echo "📦 Starting all services (backend, frontend, sonarqube)..."
+    SERVICES="backend-service frontend sonarqube"
+    echo "📦 Starting all services (backend-service, frontend, sonarqube)..."
 else
-    SERVICES="backend frontend"
-    echo "📦 Starting application services (backend, frontend)..."
+    SERVICES="backend-service frontend"
+    echo "📦 Starting application services (backend-service, frontend)..."
     echo "   Use --with-sonarqube to include SonarQube"
 fi
 
@@ -92,7 +92,7 @@ echo ""
 
 # Build and start services
 echo "🔨 Building and starting services..."
-docker-compose up -d $SERVICES
+docker compose up -d $SERVICES
 
 echo ""
 
@@ -149,9 +149,9 @@ fi
 
 echo ""
 echo "📋 Useful Commands:"
-echo "   • View logs:    docker-compose logs -f"
-echo "   • Stop all:     docker-compose down"
-echo "   • Restart:      docker-compose restart"
+echo "   • View logs:    docker compose logs -f"
+echo "   • Stop all:     docker compose down"
+echo "   • Restart:      docker compose restart"
 echo ""
 echo "📚 Documentation:"
 echo "   • Main README:      README.md"

@@ -14,7 +14,7 @@ cors.allowed.origins=${CORS_ALLOWED_ORIGINS:http://localhost:5173,http://localho
 ### Docker Environment Variables
 
 ```bash
-# In docker-compose.yml or .env file
+# In docker compose file or .env file
 SPRING_PROFILES_ACTIVE=prod
 CORS_ALLOWED_ORIGINS=http://localhost:5173,http://localhost:8000,https://*.githubpreview.dev,https://*.preview.app.github.dev,https://*.app.github.dev
 ```
@@ -80,7 +80,7 @@ npm run dev
 
 ```bash
 # Start SonarQube
-docker-compose up -d sonarqube
+docker compose up -d sonarqube
 
 # Run setup script to get tokens
 ./scripts/setup-sonarqube.sh

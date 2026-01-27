@@ -539,10 +539,11 @@ Comprehensive guides available in the `docs/` folder:
 - **[CODESPACES.md](docs/CODESPACES.md)** - GitHub Codespaces setup
 - **[QUICKSTART.md](docs/QUICKSTART.md)** - Quick start guide
 - **[SUMMARY.md](docs/SUMMARY.md)** - Project summary
+- **[students_tutorial.md](docs/students_tutorial.md)** - Student walkthrough
 
 ## 🎓 Student Tutorial
 
-New to the repo? Follow the guided walkthrough in **[docs/STUDENTS_TUTORIAL.md](docs/STUDENTS_TUTORIAL.md)** for:
+New to the repo? Follow the guided walkthrough in **[docs/students_tutorial.md](docs/students_tutorial.md)** for:
 
 - Forking the repository
 - Creating a Codespace

@@ -143,7 +143,7 @@ docker build -t backend ./backend
 docker build -t frontend ./frontend
 
 # Run with Docker Compose
-docker-compose up --build
+docker compose up --build
 ```
 
 ### Kubernetes in Codespace

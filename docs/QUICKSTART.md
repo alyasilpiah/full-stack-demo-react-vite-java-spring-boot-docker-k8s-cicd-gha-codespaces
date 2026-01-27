@@ -222,7 +222,7 @@ npm install
 docker system prune -a
 
 # Rebuild without cache
-docker-compose build --no-cache
+docker compose build --no-cache
 ```
 
 ## Running Tests
