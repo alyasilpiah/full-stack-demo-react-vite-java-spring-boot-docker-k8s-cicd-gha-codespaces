@@ -123,9 +123,9 @@ The Codespaces will automatically forward ports and provide URLs for both servic
 
 ```yaml
 services:
-  backend:        # Spring Boot API (port 8080)
-  frontend:       # React Vite App (port 8000)
-  sonarqube:      # Code Quality Analysis (port 9000)
+  backend-service: # Spring Boot API (port 8080)
+  frontend:        # React Vite App (port 8000)
+  sonarqube:       # Code Quality Analysis (port 9000)
 ```
 
 ### Managing Services
